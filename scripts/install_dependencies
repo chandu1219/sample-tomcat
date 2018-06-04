@@ -2,12 +2,12 @@
 
 set -e
 
-CATALINA_HOME=/usr/share/tomcat7-codedeploy
+CATALINA_HOME=/usr/share/tomcat8-codedeploy
 TOMCAT_VERSION=8.5.31
 
 # Tar file name
 TOMCAT7_CORE_TAR_FILENAME="apache-tomcat-8.5.31.tar.gz"
-# Download URL for Tomcat7 core
+# Download URL for Tomcat8 core
 TOMCAT7_CORE_DOWNLOAD_URL="http://www-us.apache.org/dist/tomcat/tomcat-8/v8.5.31/bin/apache-tomcat-8.5.31.tar.gz"
 # The top-level directory after unpacking the tar file
 TOMCAT7_CORE_UNPACKED_DIRNAME="apache-tomcat-$TOMCAT_VERSION"
@@ -16,7 +16,7 @@ TOMCAT7_CORE_UNPACKED_DIRNAME="apache-tomcat-$TOMCAT_VERSION"
 # Check whether there exists a valid instance
 # of Tomcat7 installed at the specified directory
 [[ -d $CATALINA_HOME ]] && { sudo service tomcat8 status; } && {
-    echo "Tomcat7 is already installed at $CATALINA_HOME. Skip reinstalling it."
+    echo "Tomcat8 is already installed at $CATALINA_HOME. Skip reinstalling it."
     exit 0
 }
 
