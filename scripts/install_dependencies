@@ -3,19 +3,19 @@
 set -e
 
 CATALINA_HOME=/usr/share/tomcat7-codedeploy
-TOMCAT_VERSION=7.0.77
+TOMCAT_VERSION=8.5.31
 
 # Tar file name
-TOMCAT7_CORE_TAR_FILENAME="apache-tomcat-$TOMCAT_VERSION.tar.gz"
+TOMCAT7_CORE_TAR_FILENAME="apache-tomcat-8.5.31.tar.gz"
 # Download URL for Tomcat7 core
-TOMCAT7_CORE_DOWNLOAD_URL="http://mirror.olnevhost.net/pub/apache/tomcat/tomcat-7/v$TOMCAT_VERSION/bin/$TOMCAT7_CORE_TAR_FILENAME"
+TOMCAT7_CORE_DOWNLOAD_URL="http://www-us.apache.org/dist/tomcat/tomcat-8/v8.5.31/bin/apache-tomcat-8.5.31.tar.gz"
 # The top-level directory after unpacking the tar file
 TOMCAT7_CORE_UNPACKED_DIRNAME="apache-tomcat-$TOMCAT_VERSION"
 
 
 # Check whether there exists a valid instance
 # of Tomcat7 installed at the specified directory
-[[ -d $CATALINA_HOME ]] && { service tomcat7 status; } && {
+[[ -d $CATALINA_HOME ]] && { sudo service tomcat8 status; } && {
     echo "Tomcat7 is already installed at $CATALINA_HOME. Skip reinstalling it."
     exit 0
 }
@@ -28,7 +28,7 @@ mkdir -p $CATALINA_HOME
 
 # Download the latest Tomcat7 version
 cd /tmp
-{ which wget; } || { yum install wget; }
+{ which wget; } || { sudo apt-get install wget; }
 wget $TOMCAT7_CORE_DOWNLOAD_URL
 if [[ -d /tmp/$TOMCAT7_CORE_UNPACKED_DIRNAME ]]; then
     rm -rf /tmp/$TOMCAT7_CORE_UNPACKED_DIRNAME
@@ -39,16 +39,18 @@ tar xzf $TOMCAT7_CORE_TAR_FILENAME
 cp -r /tmp/$TOMCAT7_CORE_UNPACKED_DIRNAME/* $CATALINA_HOME
 
 # Install Java if not yet installed
-{ which java; } || { yum install java; }
+{ which java; } || { sudo add-apt-repository ppa:webupd8team/java; }
+{ sudo apt-get update; }
+{ sudo apt-get -y install oracle-java8-installer }
 
 # Create the service init.d script
-cat > /etc/init.d/tomcat7 <<'EOF'
+cat > /etc/init.d/tomcat8 <<'EOF'
 #!/bin/bash
-# description: Tomcat7 Start Stop Restart
-# processname: tomcat7
+# description: Tomcat8 Start Stop Restart
+# processname: tomcat8
 PATH=$JAVA_HOME/bin:$PATH
 export PATH
-CATALINA_HOME='/usr/share/tomcat7-codedeploy'
+CATALINA_HOME='/usr/share/tomcat8-codedeploy'
 
 case $1 in
 start)
@@ -66,5 +68,5 @@ exit 0
 EOF
 
 # Change permission mode for the service script
-chmod 755 /etc/init.d/tomcat7
+chmod 755 /etc/init.d/tomcat8
 
