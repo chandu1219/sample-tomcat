@@ -1,5 +1,5 @@
 #!/bin/bash
 
-# set -e
+set -e
 
-# service tomcat8 stop
+sudo /etc/init.d/tomcat8 stop
