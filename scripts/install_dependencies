@@ -41,7 +41,7 @@ cp -r /tmp/$TOMCAT7_CORE_UNPACKED_DIRNAME/* $CATALINA_HOME
 # Install Java if not yet installed
 { which java; } || { sudo add-apt-repository ppa:webupd8team/java; }
 { sudo apt-get update; }
-{ sudo apt-get -y install oracle-java8-installer }
+{ sudo apt-get -y install oracle-java8-installer; }
 
 # Create the service init.d script
 cat > /etc/init.d/tomcat8 <<'EOF'
@@ -69,4 +69,3 @@ EOF
 
 # Change permission mode for the service script
 chmod 755 /etc/init.d/tomcat8
-
