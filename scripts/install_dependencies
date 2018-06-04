@@ -15,10 +15,10 @@ TOMCAT7_CORE_UNPACKED_DIRNAME="apache-tomcat-$TOMCAT_VERSION"
 
 # Check whether there exists a valid instance
 # of Tomcat7 installed at the specified directory
-[[ -d $CATALINA_HOME ]] && { sudo service tomcat8 status; } && {
-    echo "Tomcat8 is already installed at $CATALINA_HOME. Skip reinstalling it."
-    exit 0
-}
+# [[ -d $CATALINA_HOME ]] && { sudo service tomcat8 status; } && {
+#     echo "Tomcat8 is already installed at $CATALINA_HOME. Skip reinstalling it."
+#     exit 0
+# }
 
 # Clear install directory
 if [ -d $CATALINA_HOME ]; then
